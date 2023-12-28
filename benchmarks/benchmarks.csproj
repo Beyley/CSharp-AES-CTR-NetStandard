@@ -6,11 +6,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="BenchmarkDotNet" Version="0.13.10" />
+    <PackageReference Include="BenchmarkDotNet" Version="0.13.11" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\src\AES-CTR-Netstandard.csproj" />
+    <ProjectReference Include="..\src\FastAes.csproj" />
   </ItemGroup>
 
 </Project>

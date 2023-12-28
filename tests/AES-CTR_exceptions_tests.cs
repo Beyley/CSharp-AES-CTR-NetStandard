@@ -1,6 +1,6 @@
 using NUnit.Framework;
 using System.IO;
-using CS_AES_CTR;
+using FastAes;
 using System;
 
 namespace Tests
@@ -30,12 +30,12 @@ namespace Tests
 			// Act
 
 			// Assert
-			Assert.That(() => new AES_CTR(invalidKey1, initialCounterValid), Throws.ArgumentNullException);
-			Assert.That(() => new AES_CTR(invalidKey2, initialCounterValid), Throws.ArgumentException);
-			Assert.That(() => new AES_CTR(invalidKey3, initialCounterValid), Throws.ArgumentException);
-			Assert.That(() => new AES_CTR(invalidKey4, initialCounterValid), Throws.ArgumentException);
-			Assert.That(() => new AES_CTR(invalidKey5, initialCounterValid), Throws.ArgumentException);
-			Assert.That(() => new AES_CTR(invalidKey6, initialCounterValid), Throws.ArgumentException);
+			Assert.That(() => new AesCtr(invalidKey1, initialCounterValid), Throws.ArgumentNullException);
+			Assert.That(() => new AesCtr(invalidKey2, initialCounterValid), Throws.ArgumentException);
+			Assert.That(() => new AesCtr(invalidKey3, initialCounterValid), Throws.ArgumentException);
+			Assert.That(() => new AesCtr(invalidKey4, initialCounterValid), Throws.ArgumentException);
+			Assert.That(() => new AesCtr(invalidKey5, initialCounterValid), Throws.ArgumentException);
+			Assert.That(() => new AesCtr(invalidKey6, initialCounterValid), Throws.ArgumentException);
 		}
 
 		[Test]
@@ -52,10 +52,10 @@ namespace Tests
 			// Act
 
 			// Assert
-			Assert.That(() => new AES_CTR(key, initialCounterInvalid1), Throws.ArgumentNullException);
-			Assert.That(() => new AES_CTR(key, initialCounterInvalid2), Throws.ArgumentException);
-			Assert.That(() => new AES_CTR(key, initialCounterInvalid3), Throws.ArgumentException);
-			Assert.That(() => new AES_CTR(key, initialCounterInvalid4), Throws.ArgumentException);
+			Assert.That(() => new AesCtr(key, initialCounterInvalid1), Throws.ArgumentNullException);
+			Assert.That(() => new AesCtr(key, initialCounterInvalid2), Throws.ArgumentException);
+			Assert.That(() => new AesCtr(key, initialCounterInvalid3), Throws.ArgumentException);
+			Assert.That(() => new AesCtr(key, initialCounterInvalid4), Throws.ArgumentException);
 		}
 
 		[Test]
@@ -73,8 +73,8 @@ namespace Tests
 			byte[] invalidInput1 = null;
 			byte[] invalidOutput1 = null;
 
-			AES_CTR nullInput = new AES_CTR(key, initialCounter);
-			AES_CTR nullOutput = new AES_CTR(key, initialCounter);
+			AesCtr nullInput = new AesCtr(key, initialCounter);
+			AesCtr nullOutput = new AesCtr(key, initialCounter);
 
 			// Act
 
@@ -84,7 +84,7 @@ namespace Tests
 
 			Assert.Throws<ArgumentOutOfRangeException>(() => nullInput.EncryptBytes(validOutputArray, validInputArray, -1));
 			Assert.Throws<ArgumentOutOfRangeException>(() => nullInput.EncryptBytes(validOutputArray, validInputArray, lengthOfData + 1));
-			Assert.Throws<ArgumentOutOfRangeException>(() => nullInput.EncryptBytes(new byte[lengthOfData/2], validInputArray, lengthOfData));
+			Assert.Throws<IndexOutOfRangeException>(() => nullInput.EncryptBytes(new byte[lengthOfData/2], validInputArray, lengthOfData));
 		}
 
 		[Test]
@@ -99,7 +99,7 @@ namespace Tests
 
 			byte[] encrypted = new byte[contentLength];
 
-			AES_CTR forEncrypting = new AES_CTR(key, initialCounter);
+			AesCtr forEncrypting = new AesCtr(key, initialCounter);
 
 			// Act
 			forEncrypting.EncryptBytes(encrypted, content, contentLength);

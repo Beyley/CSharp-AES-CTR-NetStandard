@@ -1,7 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Diagnostics;
-using CS_AES_CTR;
+using FastAes;
 
 namespace harness
 {
@@ -42,7 +42,7 @@ namespace harness
 			Stopwatch stopwatch = new Stopwatch();
 			stopwatch.Start();
 
-			using (AES_CTR forEncrypting = new AES_CTR(key, initialCounter))
+			using (AesCtr forEncrypting = new AesCtr(key, initialCounter))
 			{
 				// Read from input stream as long as there is something
 				using (Stream inputStream = Console.OpenStandardInput())

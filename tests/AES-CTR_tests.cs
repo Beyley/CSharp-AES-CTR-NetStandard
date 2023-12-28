@@ -1,9 +1,10 @@
 using NUnit.Framework;
 using System.IO;
-using CS_AES_CTR;
+using FastAes;
 using System;
 using System.Threading.Tasks;
 using System.Linq;
+using NUnit.Framework.Legacy;
 
 namespace Tests
 {
@@ -49,14 +50,14 @@ namespace Tests
 			#endif // NET6_0_OR_GREATER
 
 			// Act
-			AES_CTR aesCtr = new AES_CTR(key, initialCounter);
+			AesCtr aesCtr = new AesCtr(key, initialCounter);
 			aesCtr.EncryptBytes(actualOutput1, bytesToEncrypt1, bytesToEncrypt1.Length);
 			aesCtr.EncryptBytes(actualOutput2, bytesToEncrypt2, bytesToEncrypt2.Length);
 			aesCtr.EncryptBytes(actualOutput3, bytesToEncrypt3, bytesToEncrypt3.Length);
 			aesCtr.EncryptBytes(actualOutput4, bytesToEncrypt4, bytesToEncrypt4.Length);
 
 			#if NET6_0_OR_GREATER
-			AES_CTR aesCtrDifferentConstructor = new AES_CTR(new ReadOnlySpan<byte>(key), new ReadOnlySpan<byte>(initialCounter));
+			AesCtr aesCtrDifferentConstructor = new AesCtr(key, initialCounter);
 			aesCtrDifferentConstructor.EncryptBytes(actualOutput1DifferentConstructor, bytesToEncrypt1, bytesToEncrypt1.Length);
 			aesCtrDifferentConstructor.EncryptBytes(actualOutput2DifferentConstructor, bytesToEncrypt2, bytesToEncrypt2.Length);
 			aesCtrDifferentConstructor.EncryptBytes(actualOutput3DifferentConstructor, bytesToEncrypt3, bytesToEncrypt3.Length);
@@ -103,7 +104,7 @@ namespace Tests
 			byte[] actualOutput4 = new byte[bytesToDecrypt4.Length];
 
 			// Act
-			AES_CTR aesCtr = new AES_CTR(key, initialCounter);
+			AesCtr aesCtr = new AesCtr(key, initialCounter);
 			aesCtr.DecryptBytes(actualOutput1, bytesToDecrypt1, bytesToDecrypt1.Length);
 			aesCtr.DecryptBytes(actualOutput2, bytesToDecrypt2, bytesToDecrypt2.Length);
 			aesCtr.DecryptBytes(actualOutput3, bytesToDecrypt3, bytesToDecrypt3.Length);
@@ -142,7 +143,7 @@ namespace Tests
 			byte[] actualOutput4 = new byte[bytesToEncrypt4.Length];
 
 			// Act
-			AES_CTR aesCtr = new AES_CTR(key, initialCounter);
+			AesCtr aesCtr = new AesCtr(key, initialCounter);
 			aesCtr.EncryptBytes(actualOutput1, bytesToEncrypt1, bytesToEncrypt1.Length);
 			aesCtr.EncryptBytes(actualOutput2, bytesToEncrypt2, bytesToEncrypt2.Length);
 			aesCtr.EncryptBytes(actualOutput3, bytesToEncrypt3, bytesToEncrypt3.Length);
@@ -181,7 +182,7 @@ namespace Tests
 			byte[] actualOutput4 = new byte[bytesToDecrypt4.Length];
 
 			// Act
-			AES_CTR aesCtr = new AES_CTR(key, initialCounter);
+			AesCtr aesCtr = new AesCtr(key, initialCounter);
 			aesCtr.DecryptBytes(actualOutput1, bytesToDecrypt1, bytesToDecrypt1.Length);
 			aesCtr.DecryptBytes(actualOutput2, bytesToDecrypt2, bytesToDecrypt2.Length);
 			aesCtr.DecryptBytes(actualOutput3, bytesToDecrypt3, bytesToDecrypt3.Length);
@@ -220,7 +221,7 @@ namespace Tests
 			byte[] actualOutput4 = new byte[bytesToEncrypt4.Length];
 
 			// Act
-			AES_CTR aesCtr = new AES_CTR(key, initialCounter);
+			AesCtr aesCtr = new AesCtr(key, initialCounter);
 			aesCtr.EncryptBytes(actualOutput1, bytesToEncrypt1, bytesToEncrypt1.Length);
 			aesCtr.EncryptBytes(actualOutput2, bytesToEncrypt2, bytesToEncrypt2.Length);
 			aesCtr.EncryptBytes(actualOutput3, bytesToEncrypt3, bytesToEncrypt3.Length);
@@ -259,7 +260,7 @@ namespace Tests
 			byte[] actualOutput4 = new byte[bytesToDecrypt4.Length];
 
 			// Act
-			AES_CTR aesCtr = new AES_CTR(key, initialCounter);
+			AesCtr aesCtr = new AesCtr(key, initialCounter);
 			aesCtr.DecryptBytes(actualOutput1, bytesToDecrypt1, bytesToDecrypt1.Length);
 			aesCtr.DecryptBytes(actualOutput2, bytesToDecrypt2, bytesToDecrypt2.Length);
 			aesCtr.DecryptBytes(actualOutput3, bytesToDecrypt3, bytesToDecrypt3.Length);
@@ -284,7 +285,7 @@ namespace Tests
 			byte[] expectedOutput = new byte[] { 0xa3, 0x38, 0xed, 0xa3, 0x87, 0x4e, 0xd8, 0x84, 0xb6, 0x19, 0x91, 0x50, 0xd3, 0x6f, 0x49, 0x98, 0x8c, 0x90, 0xf5, 0xc4, 0x7f, 0xe7, 0x79, 0x2b, 0x0c, 0xf8, 0xc7, 0xf7, 0x7e, 0xef, 0xfd, 0x87, 0xea, 0x14, 0x5b, 0x73, 0xe8, 0x2a, 0xef, 0xcf, 0x20, 0x76, 0xf8, 0x81, 0xc8, 0x88, 0x79, 0xe4, 0xe2, 0x5b, 0x1d, 0x7b, 0x24, 0xba, 0x27, 0x88 };
 			byte[] actualOutput = new byte[expectedOutput.Length];
 			// Act
-			AES_CTR aesCtr = new AES_CTR(key, initialCounter);
+			AesCtr aesCtr = new AesCtr(key, initialCounter);
 			aesCtr.EncryptBytes(actualOutput, bytesToEncrypt, bytesToEncrypt.Length);
 
 			// Assert
@@ -312,26 +313,26 @@ namespace Tests
 			byte[] encryptedContent3 = null;
 			byte[] decryptedContent3 = null;
 
-			AES_CTR forEncrypting1 = null;
-			AES_CTR forDecrypting1 = null;
+			AesCtr forEncrypting1 = null;
+			AesCtr forDecrypting1 = null;
 
-			AES_CTR forEncrypting2 = null;
-			AES_CTR forDecrypting2 = null;
+			AesCtr forEncrypting2 = null;
+			AesCtr forDecrypting2 = null;
 
-			AES_CTR forEncrypting3 = null;
-			AES_CTR forDecrypting3 = null;
+			AesCtr forEncrypting3 = null;
+			AesCtr forDecrypting3 = null;
 
 			// Act
 			rng.NextBytes(randomContent);
 
-			forEncrypting1 = new AES_CTR(key, initialCounter);
-			forDecrypting1 = new AES_CTR(key, initialCounter);
+			forEncrypting1 = new AesCtr(key, initialCounter);
+			forDecrypting1 = new AesCtr(key, initialCounter);
 
-			forEncrypting2 = new AES_CTR(key, initialCounter);
-			forDecrypting2 = new AES_CTR(key, initialCounter);
+			forEncrypting2 = new AesCtr(key, initialCounter);
+			forDecrypting2 = new AesCtr(key, initialCounter);
 
-			forEncrypting3 = new AES_CTR(key, initialCounter);
-			forDecrypting3 = new AES_CTR(key, initialCounter);
+			forEncrypting3 = new AesCtr(key, initialCounter);
+			forDecrypting3 = new AesCtr(key, initialCounter);
 
 			forEncrypting1.EncryptBytes(encryptedContent1, randomContent);
 			forDecrypting1.DecryptBytes(decryptedContent1, encryptedContent1);
@@ -374,26 +375,26 @@ namespace Tests
 			byte[] encryptedContent3 = null;
 			byte[] decryptedContent3 = null;
 
-			AES_CTR forEncrypting1 = null;
-			AES_CTR forDecrypting1 = null;
+			AesCtr forEncrypting1 = null;
+			AesCtr forDecrypting1 = null;
 
-			AES_CTR forEncrypting2 = null;
-			AES_CTR forDecrypting2 = null;
+			AesCtr forEncrypting2 = null;
+			AesCtr forDecrypting2 = null;
 
-			AES_CTR forEncrypting3 = null;
-			AES_CTR forDecrypting3 = null;
+			AesCtr forEncrypting3 = null;
+			AesCtr forDecrypting3 = null;
 
 			// Act
 			rng.NextBytes(randomContent);
 
-			forEncrypting1 = new AES_CTR(key, initialCounter);
-			forDecrypting1 = new AES_CTR(key, initialCounter);
+			forEncrypting1 = new AesCtr(key, initialCounter);
+			forDecrypting1 = new AesCtr(key, initialCounter);
 
-			forEncrypting2 = new AES_CTR(key, initialCounter);
-			forDecrypting2 = new AES_CTR(key, initialCounter);
+			forEncrypting2 = new AesCtr(key, initialCounter);
+			forDecrypting2 = new AesCtr(key, initialCounter);
 
-			forEncrypting3 = new AES_CTR(key, initialCounter);
-			forDecrypting3 = new AES_CTR(key, initialCounter);
+			forEncrypting3 = new AesCtr(key, initialCounter);
+			forDecrypting3 = new AesCtr(key, initialCounter);
 
 			forEncrypting1.EncryptBytes(encryptedContent1, randomContent);
 			forDecrypting1.DecryptBytes(decryptedContent1, encryptedContent1);
@@ -430,14 +431,14 @@ namespace Tests
 			byte[] encryptedContent1 = new byte[lengthOfData];
 			byte[] decryptedContent1 = new byte[lengthOfData];
 
-			AES_CTR forEncrypting1 = null;
-			AES_CTR forDecrypting1 = null;
+			AesCtr forEncrypting1 = null;
+			AesCtr forDecrypting1 = null;
 
 			// Act
 			rng.NextBytes(randomContent);
 
-			forEncrypting1 = new AES_CTR(key, initialCounter);
-			forDecrypting1 = new AES_CTR(key, initialCounter);
+			forEncrypting1 = new AesCtr(key, initialCounter);
+			forDecrypting1 = new AesCtr(key, initialCounter);
 
 			forEncrypting1.EncryptStream(new MemoryStream(encryptedContent1), new MemoryStream(randomContent));
 			forDecrypting1.DecryptStream(new MemoryStream(decryptedContent1), new MemoryStream(encryptedContent1));
@@ -462,14 +463,14 @@ namespace Tests
 			byte[] encryptedContent1 = new byte[lengthOfData];
 			byte[] decryptedContent1 = new byte[lengthOfData];
 
-			AES_CTR forEncrypting1 = null;
-			AES_CTR forDecrypting1 = null;
+			AesCtr forEncrypting1 = null;
+			AesCtr forDecrypting1 = null;
 
 			// Act
 			rng.NextBytes(randomContent);
 
-			forEncrypting1 = new AES_CTR(key, initialCounter);
-			forDecrypting1 = new AES_CTR(key, initialCounter);
+			forEncrypting1 = new AesCtr(key, initialCounter);
+			forDecrypting1 = new AesCtr(key, initialCounter);
 
 			forEncrypting1.EncryptStream(new MemoryStream(encryptedContent1), new MemoryStream(randomContent));
 			forDecrypting1.DecryptStream(new MemoryStream(decryptedContent1), new MemoryStream(encryptedContent1));
@@ -494,14 +495,14 @@ namespace Tests
 			byte[] encryptedContent1 = new byte[lengthOfData];
 			byte[] decryptedContent1 = new byte[lengthOfData];
 
-			AES_CTR forEncrypting1 = null;
-			AES_CTR forDecrypting1 = null;
+			AesCtr forEncrypting1 = null;
+			AesCtr forDecrypting1 = null;
 
 			// Act
 			rng.NextBytes(randomContent);
 
-			forEncrypting1 = new AES_CTR(key, initialCounter);
-			forDecrypting1 = new AES_CTR(key, initialCounter);
+			forEncrypting1 = new AesCtr(key, initialCounter);
+			forDecrypting1 = new AesCtr(key, initialCounter);
 
 			await forEncrypting1.EncryptStreamAsync(new MemoryStream(encryptedContent1), new MemoryStream(randomContent));
 			await forDecrypting1.DecryptStreamAsync(new MemoryStream(decryptedContent1), new MemoryStream(encryptedContent1));
@@ -526,14 +527,14 @@ namespace Tests
 			byte[] encryptedContent1 = new byte[lengthOfData];
 			byte[] decryptedContent1 = new byte[lengthOfData];
 
-			AES_CTR forEncrypting1 = null;
-			AES_CTR forDecrypting1 = null;
+			AesCtr forEncrypting1 = null;
+			AesCtr forDecrypting1 = null;
 
 			// Act
 			rng.NextBytes(randomContent);
 
-			forEncrypting1 = new AES_CTR(key, initialCounter);
-			forDecrypting1 = new AES_CTR(key, initialCounter);
+			forEncrypting1 = new AesCtr(key, initialCounter);
+			forDecrypting1 = new AesCtr(key, initialCounter);
 
 			await forEncrypting1.EncryptStreamAsync(new MemoryStream(encryptedContent1), new MemoryStream(randomContent));
 			await forDecrypting1.DecryptStreamAsync(new MemoryStream(decryptedContent1), new MemoryStream(encryptedContent1));
@@ -552,15 +553,15 @@ namespace Tests
 
 			string testContent = "this is test content 😊";
 
-			AES_CTR forEncrypting1 = new AES_CTR(key, initialCounter);
-			AES_CTR forDecrypting1 = new AES_CTR(key, initialCounter);
+			AesCtr forEncrypting1 = new AesCtr(key, initialCounter);
+			AesCtr forDecrypting1 = new AesCtr(key, initialCounter);
 
 			// Act
 			byte[] encryptedContent = forEncrypting1.EncryptString(testContent);
-			string decryptedString = forDecrypting1.DecryptUTF8ByteArray(encryptedContent);
+			string decryptedString = forDecrypting1.DecryptUtf8ByteArray(encryptedContent);
 
 			// Assert
-			Assert.AreEqual(testContent, decryptedString);
+			Assert.That(testContent, Is.EqualTo(decryptedString));
 		}
 
 		[Test]
@@ -572,15 +573,15 @@ namespace Tests
 
 			string testContent = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean varius tristique convallis. Fusce finibus pharetra aliquam. Vivamus eleifend sapien ut enim efficitur, sed auctor tortor aliquam. Aliquam eget rutrum tortor. Cras eget nisi commodo, commodo lorem quis, aliquam arcu. Nulla facilisis purus ligula, sit amet gravida nibh ultricies eu.";
 
-			AES_CTR forEncryptingLittle = new AES_CTR(key, initialCounterLittle, littleEndian: true);
-			AES_CTR forDecryptingLittle = new AES_CTR(key, initialCounterLittle, littleEndian: true);
+			AesCtr forEncryptingLittle = new AesCtr(key, initialCounterLittle, littleEndian: true);
+			AesCtr forDecryptingLittle = new AesCtr(key, initialCounterLittle, littleEndian: true);
 
 			// Act
 			byte[] encryptedContentLittle = forEncryptingLittle.EncryptString(testContent);
-			string decryptedStringLittle = forDecryptingLittle.DecryptUTF8ByteArray(encryptedContentLittle);
+			string decryptedStringLittle = forDecryptingLittle.DecryptUtf8ByteArray(encryptedContentLittle);
 
 			// Assert
-			Assert.AreEqual(testContent, decryptedStringLittle);
+			Assert.That(testContent, Is.EqualTo(decryptedStringLittle));
 		}
 
 		[Test]
@@ -593,11 +594,11 @@ namespace Tests
 
 			byte[] input = new byte[32] { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31 }; 
 
-			AES_CTR forEncryptingBig = new AES_CTR(key, initialCounterBig);
-			AES_CTR forDecryptingBig = new AES_CTR(key, initialCounterBig);
+			AesCtr forEncryptingBig = new AesCtr(key, initialCounterBig);
+			AesCtr forDecryptingBig = new AesCtr(key, initialCounterBig);
 
-			AES_CTR forEncryptingLittle = new AES_CTR(key, initialCounterLittle, littleEndian: true);
-			AES_CTR forDecryptingLittle = new AES_CTR(key, initialCounterLittle, littleEndian: true);
+			AesCtr forEncryptingLittle = new AesCtr(key, initialCounterLittle, littleEndian: true);
+			AesCtr forDecryptingLittle = new AesCtr(key, initialCounterLittle, littleEndian: true);
 
 			// Act
 			byte[] encryptedContentBig = forEncryptingBig.EncryptBytes(input);
@@ -627,12 +628,12 @@ namespace Tests
 			byte[] decrypted = new byte[contentLength];
 
 			// Act
-			using (AES_CTR forEncrypting = new AES_CTR(key, initialCounter))
+			using (AesCtr forEncrypting = new AesCtr(key, initialCounter))
 			{
 				forEncrypting.EncryptBytes(encrypted, content, contentLength);
 			}
 
-			using (AES_CTR forDecrypting = new AES_CTR(key, initialCounter))
+			using (AesCtr forDecrypting = new AesCtr(key, initialCounter))
 			{
 				forDecrypting.DecryptBytes(decrypted, encrypted, contentLength);
 			}

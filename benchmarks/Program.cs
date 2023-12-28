@@ -4,7 +4,7 @@ using System.IO; // For memorystreams
 using BenchmarkDotNet.Attributes;
 using BenchmarkDotNet.Running;
 
-using CS_AES_CTR;
+using FastAes;
 
 namespace benchmarks
 {
@@ -19,9 +19,9 @@ namespace benchmarks
         private readonly byte[] data2;
         private readonly byte[] data3;
 
-        private readonly AES_CTR thisProject1 = null;
-        private readonly AES_CTR thisProject2 = null;
-        private readonly AES_CTR thisProject3 = null;
+        private readonly AesCtr thisProject1 = null;
+        private readonly AesCtr thisProject2 = null;
+        private readonly AesCtr thisProject3 = null;
 
         private static readonly byte[] key = new byte[16] { 0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08, 0x09, 0x0a, 0x0b, 0x0c, 0x0d, 0x0e, 0x0f };
         
@@ -60,9 +60,9 @@ namespace benchmarks
             rng.NextBytes(this.data3);
 
             // Set encrypters
-            this.thisProject1 = new AES_CTR(key, initialCounter);
-            this.thisProject2 = new AES_CTR(key, initialCounter);
-            this.thisProject3 = new AES_CTR(key, initialCounter);
+            this.thisProject1 = new AesCtr(key, initialCounter);
+            this.thisProject2 = new AesCtr(key, initialCounter);
+            this.thisProject3 = new AesCtr(key, initialCounter);
         }
 
     #region 64 bytes
